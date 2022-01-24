@@ -19,9 +19,9 @@ public class HomeService {
 	int cardPayments = 0;
 	int numOfCansSold = 0;
 
-	
 	/**
 	 * checks if the selected item is available in stock
+	 * 
 	 * @param key id of the selected item
 	 * @return true if selected item available
 	 */
@@ -38,45 +38,48 @@ public class HomeService {
 		} // for
 		return false;
 	}// checkInventory
-	
-	
 
 	/**
 	 * payment method counter
+	 * 
 	 * @param paymentMethod the mode of payment chosen
 	 */
-	public void addPaymentNumber(String paymentMethod) {
+	public boolean addPaymentNumber(String paymentMethod) {
 
 		switch (paymentMethod) {
 		case "1":
 			this.cardPayments++;
-			break;
+			return true;
 		case "2":
 			this.cashPayments++;
-			break;
+			return true;
 		default:
-			break;
+			return false;
 		}
 	}// addPaymentNumber
 
-	
 	/**
 	 * performs the payments if the stock is available
-	 * @param key id of the item selected
+	 * 
+	 * @param key           id of the item selected
 	 * @param paymentMethod mode of payment
-	 * @return true if stock available and payment successful 
+	 * @return true if stock available and payment successful
 	 */
 	public boolean proceedToPayment(String key, String paymentMethod) {
 
-		if (checkInventory(key)) {
-			int keyInt = Integer.parseInt(key);
-			reduceAmountAvailable(keyInt);
-			this.moneyInMachine = this.moneyInMachine + 5.0;
-			this.numOfCansSold ++; 
-			addPaymentNumber(paymentMethod);
-			return true;
-		} // if stock available
-			// System.out.println("returning false from prooceed to pay");
+		if (!key.isBlank() && !paymentMethod.isBlank()
+				&& (paymentMethod.equalsIgnoreCase("1") || paymentMethod.equalsIgnoreCase("2"))) {
+
+			if (checkInventory(key)) {
+				int keyInt = Integer.parseInt(key);
+				reduceAmountAvailable(keyInt);
+				this.moneyInMachine = this.moneyInMachine + 5.0;
+				this.numOfCansSold++;
+				addPaymentNumber(paymentMethod);
+				return true;
+			} // if stock available
+
+		}
 
 		return false;
 	}// makePayment
@@ -86,9 +89,9 @@ public class HomeService {
 		inventoryList.get(indexNo).setAmountAvailable(availAmount - 1);
 	}// reduceAmountAvailable
 
-	
 	/**
 	 * reset the machines value and restock the items
+	 * 
 	 * @return the redirection to restock
 	 */
 	public String restock() {
@@ -103,13 +106,13 @@ public class HomeService {
 
 		return "restock";
 
-	}//restock
-	
-	
-/**
- * sets the list of items and inventory
- * @return list of items and their values
- */
+	}// restock
+
+	/**
+	 * sets the list of items and inventory
+	 * 
+	 * @return list of items and their values
+	 */
 	public HashMap<String, String> getListOfItems() {
 
 		HashMap<String, String> list = new HashMap<String, String>();
@@ -129,8 +132,6 @@ public class HomeService {
 		return list;
 
 	}
-
-	
 
 	/**
 	 * sets the list of Inventory
@@ -152,11 +153,6 @@ public class HomeService {
 		}
 
 	}
-	
-	
-
-	
-	
 
 	public double getMoneyInMachine() {
 		return moneyInMachine;

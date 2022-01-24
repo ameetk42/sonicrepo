@@ -25,13 +25,13 @@
 			<tr>
 				<th><c:if test="${paymentMethod==1}">
 						<div id="mDiv">
-							Card <label>Card Details</label> Card Number: <input type="text"
+							 <label>Card Details</label> Card Number: <input type="text"
 								name="cardNumber"> Expire Date: <input type="text"
 								name="expiryDate"> CCV: <input type="text" name="ccv">
 						</div>
 					</c:if> <c:if test="${paymentMethod==2}">
 						<div id="mDiv">
-							Coins <label>${paymentMethod}</label> Please Enter Cash <input
+							 <label>Please Enter Cash </label> <input
 								type="text" name="coins">
 
 						</div>
